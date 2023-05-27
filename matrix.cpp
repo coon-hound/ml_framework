@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <assert.h>
+#include <string.h>
 
 #define MAT_AT(i, j) _arr[(i)*_cols + (j)]
 
@@ -66,9 +67,24 @@ void Matrix::Rand(double min, double max)
 
 Matrix Matrix::Dot(Matrix a, Matrix b)
 {
-	Matrix res(1, 2);
-	printf("helelogapsodf\n\n\n\n\n");
-	return res;
+	assert(a.getCols() == b.getRows());
+	int n = a.getCols();
+	int rows = a.getRows();
+	int cols = b.getCols();
+
+	double *arr = (double *)malloc(sizeof(double) * rows * cols);
+	memset(arr, 0, sizeof(double) * rows * cols);
+	for(int i = 0; i < rows; i++){
+		for(int j = 0; j < cols; j++){
+			for(int k = 0; k < n; k++){
+				arr[(i)*cols + (j)] += a.getEl(i, k) * b.getEl(k, j);
+			}
+		}
+	}
+
+	Matrix ret(rows, cols, arr);
+
+	return ret; 
 }
 
 Matrix Matrix::Add(Matrix a, Matrix b)
