@@ -10,6 +10,7 @@ public:
 	void Fill(int x);
 	void Rand(double min, double max);
 	void Print();
+
 	static Matrix Dot(Matrix a, Matrix b);
 	static Matrix Add(Matrix a, Matrix b);
 
