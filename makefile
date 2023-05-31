@@ -1,10 +1,11 @@
 all: 
-	gcc -std=c++17 -Wall -Werror -c matrix.cpp
-	gcc -std=c++17 -Wall -Werror -c test.cpp
-	gcc matrix.o test.o -o test
+	g++ -std=c++17 -stdlib=libc++ -Wall -Werror -c matrix.cpp
+	g++ -std=c++17 -stdlib=libc++ -Wall -Werror -c neural_network.cpp
+	g++ -std=c++17 -stdlib=libc++ -Wall -Werror -c xor.cpp
+	g++ matrix.o neural_network.o xor.o -o xor -lm
 
 clean:
-	rm -rf a.out test
+	rm -rf a.out xor
 	rm -rf *.o
 	
 
