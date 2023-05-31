@@ -8,9 +8,9 @@ public:
 	Matrix() = default;
 	Matrix(int rows, int cols);
 
-	Matrix(int rows, int cols, std::shared_ptr<double> arr);
+	Matrix(int rows, int cols, std::shared_ptr<double[]> arr);
 //	~Matrix();
-	void Alloc(double *arr);
+	void Alloc(std::shared_ptr<double[]> arr);
 	void Sigmoid();
 	void Fill(int x);
 	void Rand();

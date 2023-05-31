@@ -26,21 +26,17 @@ Matrix::Matrix(int rows, int cols)
 	_rows = rows;
 	_cols = cols;
 	_arr.reset(new double[rows * cols]);
-	(void) rows;
-	(void) cols;
-	(void) _rows;
-	(void) _cols;
 }
 
 
 
-Matrix::Matrix(int rows, int cols, std::shared_ptr<double> arr)
+Matrix::Matrix(int rows, int cols, std::shared_ptr<double[]> arr)
 {
 	srand(time(0));
 
 	_rows = rows;
 	_cols = cols;
-	_arr = arr;
+	_arr.reset(arr.get());
 }
 
 /*
@@ -52,9 +48,9 @@ Matrix::~Matrix()
 */
 
 
-void Matrix::Alloc(double *arr)
+void Matrix::Alloc(std::shared_ptr<double[]> arr)
 {
-	_arr.reset(arr);
+	_arr.reset(arr.get());
 }
 
 void Matrix::Sigmoid()
