@@ -6,15 +6,15 @@ class NeuralNetwork
 {
 public:
 	NeuralNetwork();
-	NeuralNetwork(int layers);
+	NeuralNetwork(int input, int hidden, int output, int layers);
 	void Forward();
 
 
 
 private:
-//	int _input_layers;
-//	int _output_layers;
-//	int _hidden_layers;
+	int _input_layers;
+	int _hidden_layers;
+	int _output_layers;
 	int _layers; //layers including input and output layers
 
 	std::shared_ptr<Matrix[]> _x;
