@@ -1,6 +1,9 @@
 #ifndef NEURAL_NETWORK_H
 #define NEURAL_NETWORK_H
+
 #include "matrix.h"
+#include "layer.h"
+#include <vector>
 
 class NeuralNetwork
 {
@@ -10,17 +13,15 @@ public:
 	void Forward();
 
 
-
 private:
-	int _input_layers;
-	int _hidden_layers;
-	int _output_layers;
-	int _layers; //layers including input and output layers
+	int _ninput_layers;
+	int _nhidden_layers;
+	int _noutput_layers;
+	int _nlayers; //layers including input and output layers
 
-	std::shared_ptr<Matrix[]> _x;
-	std::shared_ptr<Matrix[]> _w;
-	std::shared_ptr<Matrix[]> _b;
-
+  std::vector<Layer> _layers;
+  
+  void rand_parameters();
 };
 
 #endif //NEURAL_NETWORK_H

@@ -1,5 +1,6 @@
 #ifndef MATRIX_H
 #define MATRIX_H
+#include <__nullptr>
 #include <memory>
 
 class Matrix
@@ -7,10 +8,9 @@ class Matrix
 public:
 	Matrix() = default;
 	Matrix(int rows, int cols);
+	Matrix(int rows, int cols, const std::shared_ptr<double> arr);
 
-	Matrix(int rows, int cols, std::shared_ptr<double[]> arr);
-//	~Matrix();
-	void Alloc(std::shared_ptr<double[]> arr);
+	void Alloc(const std::shared_ptr<double> arr);
 	void Sigmoid();
 	void Fill(int x);
 	void Rand();
@@ -22,9 +22,9 @@ public:
 
 	int getRows();
 	int getCols();
-	double getEl(int i, int j);
 
-	void setEl(int i, int j, int value); 
+	double getEl(int i, int j);
+	void setEl(int i, int j, double value); 
 
 	Matrix operator * (Matrix const &a);
 	Matrix operator + (Matrix const &a);
@@ -32,8 +32,7 @@ public:
 private:
 	int _rows;
 	int _cols;
-	std::shared_ptr<double[]> _arr;
-//	double *_arr;
+	std::shared_ptr<double> _arr;
 
 };
 

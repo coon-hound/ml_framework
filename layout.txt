@@ -1,0 +1,33 @@
+matrix multiplication = [a1, a2] * [w11, w12 + [b1, b2] = [y1, y2] 
+                                    w21, w22]
+
+[a1 * w11 + a2 * w21 + b1, a1 * w12 + a2 * w22 + b2]
+
+
+
+
+
+1. initialize the neural network. User gives number of layers, input layers, output layers, nodes per layer
+2. Randomize all weights and biases.
+
+--------- training begin -----------
+
+3. Feed input data through the input layer. Each layer has a matrix of activation nodes, weights, and biases. 
+    * activation matrix: 1 * (number of activation nodes)
+    * weights matrix:    (number of activation nodes) * (number of nodes in the next layer)
+    * bias matrix:       1 * (number of nodes in the next layer)
+    * result matrix:     1 * (number of nodes in the next layer)
+
+
+4. Forward through each hidden layer to the output layer
+
+--------- back propogation ----------
+
+5. Commence back propogation to calculate gradient vector
+
+6. Shift all weights and biases by the gradient vector
+
+7. repeat from step 3 until no more training data.
+
+ezpz
+

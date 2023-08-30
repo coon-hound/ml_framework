@@ -1,0 +1,9 @@
+1. matrix multiplication equation si wrong. 
+2. change the layers class to have the matrices of the correct size. 
+      * we probably need to take into account the number of nodes int eh previous or next layer to determine the size of the weights          matrice
+
+Matrix Dimesions:
+    * activation matrix: 1 * (number of activation nodes)
+    * weights matrix:    (number of activation nodes) * (number of nodes in the next layer)
+    * bias matrix:       1 * (number of nodes in the next layer)
+    * result matrix:     1 * (number of nodes in the next layer)

@@ -3,14 +3,15 @@
 
 int main()
 {
-	/*
 	double m_arr[] = {1, 2, 3, 4, 5, 6};
-	Matrix m(2, 3, std::shared_ptr<double>(m_arr));
+	std::shared_ptr<double[]> ptr(m_arr);
+	Matrix m(2, 3, ptr);
 	m.Print();
 	printf("--------\n");
 
 	double b_arr[] = {7, 8, 9, 10, 11, 12};
-	Matrix b(3, 2, std::shared_ptr<double>(b_arr));
+	std::shared_ptr<double[]> ptrb(b_arr);
+	Matrix b(3, 2, ptrb);
 	b.Print();
 	printf("--------\n");
 
@@ -18,7 +19,6 @@ int main()
 	res.Print();
 	res = m + m;
 	res.Print();
-	*/
 
 
 	/*
