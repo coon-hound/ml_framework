@@ -20,11 +20,11 @@ public:
 	static Matrix Dot(Matrix a, Matrix b);
 	static Matrix Add(Matrix a, Matrix b);
 
-	int getRows();
-	int getCols();
+	int GetRows();
+	int GetCols();
 
-	double getEl(int i, int j);
-	void setEl(int i, int j, double value); 
+	double GetEl(int i, int j);
+	void SetEl(int i, int j, double value); 
 
 	Matrix operator * (Matrix const &a);
 	Matrix operator + (Matrix const &a);

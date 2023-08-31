@@ -93,16 +93,16 @@ void Matrix::Rand(double min, double max)
 
 Matrix Matrix::Dot(Matrix a, Matrix b)
 {
-	assert(a.getCols() == b.getRows());
-	int n = a.getCols();
-	int rows = a.getRows();
-	int cols = b.getCols();
+	assert(a.GetCols() == b.GetRows());
+	int n = a.GetCols();
+	int rows = a.GetRows();
+	int cols = b.GetCols();
 
 	Matrix ret(rows, cols);
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < cols; j++){
 			for(int k = 0; k < n; k++){
-				ret.setEl(i, j, ret.getEl(i, j) + a.getEl(i, k) * b.getEl(k, j));	
+				ret.SetEl(i, j, ret.GetEl(i, j) + a.GetEl(i, k) * b.GetEl(k, j));	
 			}
 		}
 	}
@@ -114,47 +114,40 @@ Matrix Matrix::Dot(Matrix a, Matrix b)
 
 Matrix Matrix::Add(Matrix a, Matrix b)
 {
-	assert(a.getRows() == b.getRows());
-	assert(a.getCols() == b.getCols());
+	assert(a.GetRows() == b.GetRows());
+	assert(a.GetCols() == b.GetCols());
 
-	int rows = a.getRows();
-	int cols = a.getCols();
-
-//	double *arr = (double *)malloc(sizeof(double) * rows * cols);
+	int rows = a.GetRows();
+	int cols = a.GetCols();
 
 	Matrix ret(rows, cols);
 
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < cols; j++){
-			ret.setEl(i, j, a.getEl(i, j) + b.getEl(i, j));
-//			arr[(i)*cols + (j)] = a.getEl(i, j) + b.getEl(i, j);
+			ret.SetEl(i, j, a.GetEl(i, j) + b.GetEl(i, j));
 		}
 	} 
 	
-//	Matrix ret(rows, cols, arr);
-
-//	free(arr);
-
 	return ret;
 }
 
-int Matrix::getRows()
+int Matrix::GetRows()
 {
 	return _rows;
 }
 
-int Matrix::getCols()
+int Matrix::GetCols()
 {
 	return _cols;
 }
 
 
-double Matrix::getEl(int i, int j)
+double Matrix::GetEl(int i, int j)
 {
 	return MAT_AT(i, j);
 }
 
-void Matrix::setEl(int i, int j, double value)
+void Matrix::SetEl(int i, int j, double value)
 {
 	MAT_AT(i, j) = value;	
 }

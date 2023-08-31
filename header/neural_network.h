@@ -12,11 +12,14 @@ public:
 	NeuralNetwork(int input, int hidden, int output, int layers);
 	void Forward();
 
+	//debug
+
+	void Print();
 
 private:
-	int _ninput_layers;
-	int _nhidden_layers;
-	int _noutput_layers;
+	int _ninput_nodes;
+	int _nhidden_nodes;
+	int _noutput_nodes;
 	int _nlayers; //layers including input and output layers
 
   std::vector<Layer> _layers;
