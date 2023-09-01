@@ -39,6 +39,9 @@ NeuralNetwork::NeuralNetwork(int input, int hidden, int output, int layers)
 
 void NeuralNetwork::Forward() {
 	for(int i = 0; i < _nlayers - 1; i++) {
+		printf("hi\n");
+		_layers[i].Forward().Print();
+		printf("hi\n");
 		_layers[i + 1].SetA(_layers[i].Forward());
 	}
 }

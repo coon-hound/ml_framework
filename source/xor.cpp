@@ -7,6 +7,8 @@ int main()
 
 	n.Print();
 
+	printf("got here\n");
+
 	n.Forward();
 
 	n.Print();

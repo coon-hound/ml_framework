@@ -1,4 +1,5 @@
 #include "layer.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 static double rand_double()
@@ -18,7 +19,7 @@ Layer::Layer(int nodes, int next_nodes) {
   }
 
   _a = std::make_shared<Matrix>(1, nodes);
-  _w = std::make_shared<Matrix>(nodes, next_nodes);
+  _w = std::make_shared<Matrix>(next_nodes, nodes);
   _b = std::make_shared<Matrix>(1, next_nodes);
 }
 
@@ -74,26 +75,42 @@ void Layer::SetBEl(int row, int col, double value) {
 
 
 Matrix Layer::Forward() {
-  return (*_a) * (*_w) + (*_b); 
+  Matrix res = Matrix::Dot(*_a, *_w);
+  res = Matrix::Add(res, *_b);
+
+  return res;
 }
 
 //Debug
 void Layer::Print() {
+  //print activation node values
   printf("activation node values: \n");
   for(int i = 0; i < _a->GetCols(); i++) {
     printf("a%d = %f\n", i, _a->GetEl(0, i));
   }
 
+  //print weight values
   printf("weight values: \n");
-  for(int i = 0; i < _w->GetRows(); i++) {
-    for(int j = 0; j < _w->GetCols(); j++) {
-      printf("w%d%d = %f\n", i, j, _w->GetEl(i, j));
+  if(_w == nullptr) {
+    printf("output layer, no weights\n");
+  }
+  else {
+    for(int i = 0; i < _w->GetRows(); i++) {
+      for(int j = 0; j < _w->GetCols(); j++) {
+        printf("w%d%d = %f\n", i, j, _w->GetEl(i, j));
+      }
     }
   }
 
+  // print bias values
   printf("bias values: \n");
-  for(int i = 0; i < _b->GetCols(); i++) {
-    printf("b%d = %f\n", i, _b->GetEl(0, i));
+  if(_b == nullptr) {
+    printf("output layer, no biases\n");
+  }
+  else{
+    for(int i = 0; i < _b->GetCols(); i++) {
+      printf("b%d = %f\n", i, _b->GetEl(0, i));
+    }
   }
 
   printf("-----------------\n\n");
