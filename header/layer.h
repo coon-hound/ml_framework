@@ -38,6 +38,7 @@ private:
   std::shared_ptr<Matrix> _w;
   std::shared_ptr<Matrix> _a;
   std::shared_ptr<Matrix> _b; 
+  std::shared_ptr<Matrix> _z; 
 };
 
 #endif //LAYER_H

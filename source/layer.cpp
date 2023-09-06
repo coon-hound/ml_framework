@@ -95,6 +95,9 @@ void Layer::SetBEl(int row, int col, double value) {
 Matrix Layer::Forward() {
 	Matrix res = Matrix::Dot(*_a, *_w);
 	res = Matrix::Add(res, *_b);
+
+  _z = std::make_shared<Matrix>(res);
+  
 	res = applyActivationFunction(res);
 	return res;
 }
