@@ -3,11 +3,11 @@
 
 int main()
 {
-	NeuralNetwork n(2, 0, 2, 2);
+	NeuralNetwork n(2, 3, 2, 4);
 
 	n.Print();
 
-	printf("got here\n");
+	printf("--------------\n\n\n\n\n\n");
 
 	n.Forward();
 

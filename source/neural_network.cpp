@@ -1,5 +1,6 @@
 #include "neural_network.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <queue>
 
@@ -28,7 +29,7 @@ NeuralNetwork::NeuralNetwork(int input, int hidden, int output, int layers)
 	for(int i = 0; i < _nlayers - 1; i++) {
 		int next = q.front();
 		q.pop();
-		_layers.push_back(Layer(q.front(), next));
+		_layers.push_back(Layer(next, q.front()));
 	}
 
 	_layers.push_back(Layer(q.front(), 0));
@@ -39,9 +40,7 @@ NeuralNetwork::NeuralNetwork(int input, int hidden, int output, int layers)
 
 void NeuralNetwork::Forward() {
 	for(int i = 0; i < _nlayers - 1; i++) {
-		printf("hi\n");
-		_layers[i].Forward().Print();
-		printf("hi\n");
+		_layers[i].Forward();
 		_layers[i + 1].SetA(_layers[i].Forward());
 	}
 }

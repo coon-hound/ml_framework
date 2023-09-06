@@ -2,15 +2,16 @@
 #define MATRIX_H
 
 #include <memory>
+#include <vector>
 
 class Matrix
 {
 public:
 	Matrix() = default;
 	Matrix(int rows, int cols);
-	Matrix(int rows, int cols, const std::shared_ptr<double> arr);
+	Matrix(int rows, int cols, const std::vector<double> arr);
 
-	void Alloc(const std::shared_ptr<double> arr);
+	void Alloc(const std::vector<double> arr);
 	void Sigmoid();
 	void Fill(int x);
 	void Rand();
@@ -32,7 +33,7 @@ public:
 private:
 	int _rows;
 	int _cols;
-	std::shared_ptr<double> _arr;
+	std::vector<double> _arr;
 
 };
 

@@ -31,6 +31,8 @@ public:
   void Print();
 
 private:
+  Matrix applyActivationFunction(Matrix &a);
+
   int _size;
   int _next_size;
   std::shared_ptr<Matrix> _w;

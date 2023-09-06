@@ -6,7 +6,7 @@
 #include <string.h>
 #include <math.h>
 
-#define MAT_AT(i, j) _arr.get()[(i)*_cols + (j)]
+#define MAT_AT(i, j) _arr[(i)*_cols + (j)]
 
 
 static double rand_double()
@@ -20,25 +20,21 @@ static double sigmoid(double x)
 }
 
 
-Matrix::Matrix(int rows, int cols)
-{
-	srand(time(0));
-	_rows = rows;
-	_cols = cols;
-	_arr = std::make_shared<double>(10);
+Matrix::Matrix(int rows, int cols) : 
+	_rows(rows),
+	_cols(cols),
+	_arr(rows * cols, 0.0) {
+	
+}
+	
+
+Matrix::Matrix(int rows, int cols, const std::vector<double> arr) :
+	_rows(rows),
+	_cols(cols),
+	_arr(arr) {
 }
 
-Matrix::Matrix(int rows, int cols, const std::shared_ptr<double> arr)
-
-{
-	srand(time(0));
-
-	_rows = rows;
-	_cols = cols;
-	_arr = arr;
-}
-
-void Matrix::Alloc(const std::shared_ptr<double> arr)
+void Matrix::Alloc(const std::vector<double> arr)
 {
 	_arr = arr;
 }
