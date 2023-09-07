@@ -6,6 +6,16 @@
 
 #define MAT_AT(x, i, j) (x).get()[(i) * _cols + (j)]
 
+static double sigmoid(double x) {
+	return (1.f / (1.f + exp(-x)));
+}
+
+#define A(x) sigmoid(x)
+
+static void dA(double x) {
+	return A(x) * (1 - A(x));
+}
+
 void NeuralNetwork::rand_parameters() {
   for(Layer l : _layers) {
 	l.RandParams();
@@ -61,7 +71,7 @@ void NeuralNetwork::BackPropagate() {
 	//by multiplying on it the dA/dZ1 * dZ1/dA for each layer
 
 	//for all the tohers, we multiply the secret sauce by dZ/dW
-	
+
 	//ya daz the backprop magik
 }
 
