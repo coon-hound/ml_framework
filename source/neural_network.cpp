@@ -45,6 +45,40 @@ void NeuralNetwork::Forward() {
 	}
 }
 
+void NeuralNetwork::BackPropagate() {
+	//output layer
+	//dC/dW = dC/dA * dA/dZ * dZ/dW
+	//dC/dB = dC/dA * dA/dZ * dZ/dB
+	//dC/dA = 2 * (A - Y)
+	//dA/dZ = A * (1 - A)
+	//dZ/dW = A
+	//dZ/dB = 1	
+
+	//we should have a secret sauce variable
+	//double secret_sauce = dC/dA * dA / dZ
+
+	//for each layer we iterate throught, we update the secret sauce
+	//by multiplying on it the dA/dZ1 * dZ1/dA for each layer
+
+	//for all the tohers, we multiply the secret sauce by dZ/dW
+	
+	//ya daz the backprop magik
+}
+
+void NeuralNetwork::Train() {
+
+	Forward();
+	//backpropagation
+	//output layer
+	//dC/dW = dC/dA * dA/dZ * dZ/dW
+	//dC/dB = dC/dA * dA/dZ * dZ/dB
+	//dC/dA = 2 * (A - Y)
+	//dA/dZ = A * (1 - A)
+	//dZ/dW = A
+	//dZ/dB = 1
+
+}
+
 //debug
 void NeuralNetwork::Print() {
 	for(Layer l : _layers) {

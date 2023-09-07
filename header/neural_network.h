@@ -10,7 +10,11 @@ class NeuralNetwork
 public:
 	NeuralNetwork();
 	NeuralNetwork(int input, int hidden, int output, int layers);
+
 	void Forward();
+	void BackPropagate();
+
+	void Train();
 
 	//debug
 
