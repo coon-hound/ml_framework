@@ -16,6 +16,10 @@ static void dA(double x) {
 	return A(x) * (1 - A(x));
 }
 
+static void dC(double a, double y) {
+	return 2 * (a - y);
+}
+
 void NeuralNetwork::rand_parameters() {
   for(Layer l : _layers) {
 	l.RandParams();
