@@ -81,7 +81,6 @@ void NeuralNetwork::BackPropagate(double learn_rate) {
 
 	//iterate backwards
 
-	_layers[_layers.size() - 1].
 	double val = dC() * dA();
 
 	for(int i = _nlayers - 2; i >= 0; i--) {
