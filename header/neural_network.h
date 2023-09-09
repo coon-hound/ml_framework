@@ -11,14 +11,12 @@ public:
 	NeuralNetwork();
 	NeuralNetwork(int input, int hidden, int output, int layers);
 
-	void ImportTrainingData (std::vector<double> data, std::vector<double> labels);
+	void ImportTrainingData (std::vector<std::vector<double>> data, std::vector<std::vector<double>> labels);
 
-	void Forward();
-	void BackPropagate();
+	void Forward(int dataIndex);
+	void BackPropagate(int dataIndex, double learn_rate);
 
 	void Train();
-
-	void BackPropagate(double learn_rate);
 
 	//debug
 
@@ -32,8 +30,8 @@ private:
 
 	//training data
 	int _nTrainingDataSets;
-	std::vector<double> _trainingData;
-	std::vector<double> _trainingLabels;
+	std::vector<std::vector<double>> _trainingData;
+	std::vector<std::vector<double>> _trainingLabels;
 
   std::vector<Layer> _layers;
   

@@ -48,26 +48,27 @@ NeuralNetwork::NeuralNetwork(int input, int hidden, int output, int layers) {
 	}
 
 	_layers.push_back(Layer(q.front(), 0));
-
-	_layers[0].RandActivation();
 	rand_parameters();
 }
 
-void NeuralNetwork::ImportTrainingData (std::vector<double> data, std::vector<double> labels) {
+void NeuralNetwork::ImportTrainingData (std::vector<std::vector<double>> data, std::vector<std::vector<double>> labels) {
 	assert(data.size() == labels.size() && "TRAINING DATA: data size and label size are not the same");
 	_trainingData = data;
 	_trainingLabels = labels;
 	_nTrainingDataSets = data.size();
 }
 
-void NeuralNetwork::Forward() {
+void NeuralNetwork::Forward(int dataIndex) {
+	Matrix activationValues(1, _trainingData[dataIndex].size(), _trainingData[dataIndex]);
+	_layers[0].SetA(activationValues);
+
 	for(int i = 0; i < _nlayers - 1; i++) {
 		_layers[i].Forward();
 		_layers[i + 1].SetA(_layers[i].Forward());
 	}
 }
 
-void NeuralNetwork::BackPropagate(double learn_rate) {
+void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 	//output layer
 	//dC/dW = dC/dA * dA/dZ * dZ/dW
 	//dC/dB = dC/dA * dA/dZ * dZ/dB
@@ -93,8 +94,12 @@ void NeuralNetwork::BackPropagate(double learn_rate) {
 	Layer last = _layers[_nlayers - 1];
 	Layer secondLast = _layers[_nlayers - 2];
 
+	dC(23, 23);
+	dA(23);
+
 	for(int i = 0; i < secondLast.GetSize(); i++) {
 		for(int j = 0; j < last.GetSize(); j++) {
+			
 		}
 	}
 
@@ -109,7 +114,6 @@ void NeuralNetwork::BackPropagate(double learn_rate) {
 
 void NeuralNetwork::Train() {
 
-	Forward();
 	//backpropagation
 	//output layer
 	//dC/dW = dC/dA * dA/dZ * dZ/dW
