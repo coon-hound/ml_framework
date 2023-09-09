@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <queue>
 
 #define MAT_AT(x, i, j) (x).get()[(i) * _cols + (j)]
@@ -12,11 +13,11 @@ static double sigmoid(double x) {
 
 #define A(x) sigmoid(x)
 
-static void dA(double x) {
+static double dA(double x) {
 	return A(x) * (1 - A(x));
 }
 
-static void dC(double a, double y) {
+static double dC(double a, double y) {
 	return 2 * (a - y);
 }
 
@@ -59,7 +60,7 @@ void NeuralNetwork::Forward() {
 	}
 }
 
-void NeuralNetwork::BackPropagate() {
+void NeuralNetwork::BackPropagate(double learn_rate) {
 	//output layer
 	//dC/dW = dC/dA * dA/dZ * dZ/dW
 	//dC/dB = dC/dA * dA/dZ * dZ/dB
@@ -74,9 +75,20 @@ void NeuralNetwork::BackPropagate() {
 	//for each layer we iterate throught, we update the secret sauce
 	//by multiplying on it the dA/dZ1 * dZ1/dA for each layer
 
-	//for all the tohers, we multiply the secret sauce by dZ/dW
+	//for all the others, we multiply the secret sauce by dZ/dW
 
 	//ya daz the backprop magik
+
+	//iterate backwards
+
+	_layers[_layers.size() - 1].
+	double val = dC() * dA();
+
+	for(int i = _nlayers - 2; i >= 0; i--) {
+		for(int j = 0; j < _layers[i].GetSize(); i++) {
+
+		}
+	}
 }
 
 void NeuralNetwork::Train() {

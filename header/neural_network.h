@@ -16,6 +16,8 @@ public:
 
 	void Train();
 
+	void BackPropagate(double learn_rate);
+
 	//debug
 
 	void Print();

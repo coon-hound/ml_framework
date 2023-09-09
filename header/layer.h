@@ -24,6 +24,7 @@ public:
   void SetBEl(int row, int col, double value);
 
   int GetSize();
+  int GetNextSize();
 
   Matrix Forward(); //returns a matrix of the activation values for the next layer. 
   
