@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <assert.h>
 #include <queue>
 
 #define MAT_AT(x, i, j) (x).get()[(i) * _cols + (j)]
@@ -27,8 +28,7 @@ void NeuralNetwork::rand_parameters() {
   }
 }
 
-NeuralNetwork::NeuralNetwork(int input, int hidden, int output, int layers)
-{
+NeuralNetwork::NeuralNetwork(int input, int hidden, int output, int layers) {
 	_ninput_nodes = input;
 	_nhidden_nodes = hidden;
 	_noutput_nodes = output;
@@ -51,6 +51,13 @@ NeuralNetwork::NeuralNetwork(int input, int hidden, int output, int layers)
 
 	_layers[0].RandActivation();
 	rand_parameters();
+}
+
+void NeuralNetwork::ImportTrainingData (std::vector<double> data, std::vector<double> labels) {
+	assert(data.size() == labels.size() && "TRAINING DATA: data size and label size are not the same");
+	_trainingData = data;
+	_trainingLabels = labels;
+	_nTrainingDataSets = data.size();
 }
 
 void NeuralNetwork::Forward() {
@@ -79,9 +86,19 @@ void NeuralNetwork::BackPropagate(double learn_rate) {
 
 	//ya daz the backprop magik
 
-	//iterate backwards
+	//double val = dC() * dA();
 
-	double val = dC() * dA();
+	//calculate the thing for the last layer
+
+	Layer last = _layers[_nlayers - 1];
+	Layer secondLast = _layers[_nlayers - 2];
+
+	for(int i = 0; i < secondLast.GetSize(); i++) {
+		for(int j = 0; j < last.GetSize(); j++) {
+		}
+	}
+
+	//then calculate the things for the things influencing the last layer backwards
 
 	for(int i = _nlayers - 2; i >= 0; i--) {
 		for(int j = 0; j < _layers[i].GetSize(); i++) {

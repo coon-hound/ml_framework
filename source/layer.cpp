@@ -96,7 +96,7 @@ Matrix Layer::Forward() {
 	Matrix res = Matrix::Dot(*_a, *_w);
 	res = Matrix::Add(res, *_b);
 
-  _z = std::make_shared<Matrix>(res);
+	_z = std::make_shared<Matrix>(res);
   
 	res = applyActivationFunction(res);
 	return res;
