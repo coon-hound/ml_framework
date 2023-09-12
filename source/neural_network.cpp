@@ -51,6 +51,7 @@ NeuralNetwork::NeuralNetwork(int input, int hidden, int output, int layers) {
 	rand_parameters();
 }
 
+//data and labels are 2d vectors because 
 void NeuralNetwork::ImportTrainingData (std::vector<std::vector<double>> data, std::vector<std::vector<double>> labels) {
 	assert(data.size() == labels.size() && "TRAINING DATA: data size and label size are not the same");
 	_trainingData = data;
@@ -97,9 +98,20 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 	dC(23, 23);
 	dA(23);
 
+	//matrix dimesons
+	/*
+	_a = std::make_shared<Matrix>(1, nodes);
+	_w = std::make_shared<Matrix>(nodes, next_nodes);
+	_b = std::make_shared<Matrix>(1, next_nodes);
+
+	_z = 1, next_nodes
+	_an = 1, next_nodes
+
+	*/
+
 	for(int i = 0; i < secondLast.GetSize(); i++) {
 		for(int j = 0; j < last.GetSize(); j++) {
-			
+			// secondLast.GetBEl(j, i) * dA(last.GetZEl(1, j) * dC(last.GetAEl(1, j), );	
 		}
 	}
 
