@@ -51,12 +51,18 @@ NeuralNetwork::NeuralNetwork(int input, int hidden, int output, int layers) {
 	rand_parameters();
 }
 
-//data and labels are 2d vectors because 
-void NeuralNetwork::ImportTrainingData (std::vector<std::vector<double>> data, std::vector<std::vector<double>> labels) {
-	assert(data.size() == labels.size() && "TRAINING DATA: data size and label size are not the same");
-	_trainingData = data;
-	_trainingLabels = labels;
-	_nTrainingDataSets = data.size();
+//ta stands for training, te stands for testing
+void NeuralNetwork::ImportTrainingData (std::vector<std::vector<double>> taData, std::vector<std::vector<double>> taLabels, std::vector<std::vector<double>> teData, std::vector<std::vector<double>> teLabels) {
+	assert(taData.size() == taLabels.size() && "TRAINING DATA: data size and label size are not the same");
+	assert(teData.size() == teLabels.size() && "TESTING DATA: data size and label size are not the same");
+	_trainingData = taData;
+	_trainingLabels = taLabels;
+
+	_testingData = teData;
+	_testingLabels = teLabels;
+
+	_nTrainingDataSets = _trainingData.size();
+	_nTestingDataSets = _testingData.size();
 }
 
 void NeuralNetwork::Forward(int dataIndex) {
@@ -110,9 +116,12 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 	*/
 
 	for(int i = 0; i < secondLast.GetSize(); i++) {
-		for(int j = 0; j < last.GetSize(); j++) {
-			// secondLast.GetBEl(j, i) * dA(last.GetZEl(1, j) * dC(last.GetAEl(1, j), );	
-		}
+		// double a = 0;
+		// for(int j = 0; j < last.GetSize(); j++) {
+		// 	double pdZA = secondLast.GetWEl(i, j);
+		// 	double pdAZ = dA(secondLast.GetZEl(0, j));
+		// 	double pdCA = dC(last.GetAEl(1, j), );	
+		// }
 	}
 
 	//then calculate the things for the things influencing the last layer backwards
@@ -125,7 +134,6 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 }
 
 void NeuralNetwork::Train() {
-
 	//backpropagation
 	//output layer
 	//dC/dW = dC/dA * dA/dZ * dZ/dW
@@ -134,7 +142,6 @@ void NeuralNetwork::Train() {
 	//dA/dZ = A * (1 - A)
 	//dZ/dW = A
 	//dZ/dB = 1
-
 }
 
 //debug

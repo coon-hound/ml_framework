@@ -14,9 +14,15 @@ int main()
 	std::vector<std::vector<double>> data;
 	std::vector<std::vector<double>> labels;
 
+	std::vector<std::vector<double>> tData;
+	std::vector<std::vector<double>> tLabels;
+
 	for(int i = 0; i < 10; i++) {
 		data.push_back({rand_double(), rand_double()});
 		labels.push_back({rand_double(), rand_double()});
+		
+		tData.push_back({rand_double(), rand_double()});
+		tLabels.push_back({rand_double(), rand_double()});
 	}
 
 	printf("---data---\n");
@@ -29,7 +35,18 @@ int main()
 		printf("%f, %f\n", labels[i][0], labels[i][1]);
 	}
 
-	n.ImportTrainingData(data, labels);
+	printf("---training data---\n");
+	for(int i = 0; i < 10; i++) {
+		printf("%f, %f\n", tData[i][0], tData[i][1]);
+	}
+
+	printf("---training labels---\n");
+	for(int i = 0; i < 10; i++) {
+		printf("%f, %f\n", tLabels[i][0], tLabels[i][1]);
+	}
+
+
+	n.ImportTrainingData(data, labels, tData, tLabels);
 
 	n.Print();
 
@@ -37,7 +54,7 @@ int main()
 
 	n.Print();
 
-	n.Forward(2);
+	n.Forward(1);
 	
 	n.Print();
 }

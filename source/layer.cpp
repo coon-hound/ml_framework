@@ -96,7 +96,7 @@ double Layer::GetZEl(int row, int col) {
 	return _z->GetEl(row, col);
 }
 
-double Layer::SetZEl(int row, int col, double value) {
+void Layer::SetZEl(int row, int col, double value) {
 	_z->SetEl(row, col, value);
 }
 
