@@ -101,9 +101,6 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 	Layer last = _layers[_nlayers - 1];
 	Layer secondLast = _layers[_nlayers - 2];
 
-	dC(23, 23);
-	dA(23);
-
 	//matrix dimesons
 	/*
 	_a = std::make_shared<Matrix>(1, nodes);
@@ -115,13 +112,15 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 
 	*/
 
+	//how the second to last layer activation affects the cost
 	for(int i = 0; i < secondLast.GetSize(); i++) {
-		// double a = 0;
-		// for(int j = 0; j < last.GetSize(); j++) {
-		// 	double pdZA = secondLast.GetWEl(i, j);
-		// 	double pdAZ = dA(secondLast.GetZEl(0, j));
-		// 	double pdCA = dC(last.GetAEl(1, j), );	
-		// }
+		double a = 0;
+		for(int j = 0; j < last.GetSize(); j++) {
+			double pdZA = secondLast.GetWEl(i, j);
+			double pdAZ = dA(secondLast.GetZEl(0, j));
+			double pdCA = dC(last.GetAEl(1, j), _trainingLabels[dataIndex][j]);	
+			a += pdZA + pdAZ + pdCA;
+		}
 	}
 
 	//then calculate the things for the things influencing the last layer backwards
