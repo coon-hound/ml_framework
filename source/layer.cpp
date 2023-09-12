@@ -92,6 +92,14 @@ void Layer::SetBEl(int row, int col, double value) {
 }
 
 
+double Layer::GetZEl(int row, int col) {
+	return _z->GetEl(row, col);
+}
+
+double Layer::SetZEl(int row, int col, double value) {
+	_z->SetEl(row, col, value);
+}
+
 Matrix Layer::Forward() {
 	Matrix res = Matrix::Dot(*_a, *_w);
 	res = Matrix::Add(res, *_b);

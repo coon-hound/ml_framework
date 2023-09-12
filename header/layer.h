@@ -23,6 +23,9 @@ public:
   double GetBEl(int row, int col);
   void SetBEl(int row, int col, double value);
 
+  double GetZEl(int row, int col);
+  void SetZEl(int row, int col, double value);
+
   int GetSize();
   int GetNextSize();
 
