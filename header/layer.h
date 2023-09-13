@@ -37,6 +37,8 @@ public:
 private:
   Matrix applyActivationFunction(Matrix &a);
 
+  void updateWeights(int layer, double carry, double learn_rate);
+
   int _size;
   int _next_size;
   std::shared_ptr<Matrix> _w;

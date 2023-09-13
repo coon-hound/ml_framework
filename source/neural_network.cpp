@@ -23,7 +23,7 @@ static double dC(double a, double y) {
 }
 
 void NeuralNetwork::rand_parameters() {
-  for(Layer l : _layers) {
+  for (Layer l : _layers) {
 	l.RandParams();
   }
 }
@@ -36,12 +36,12 @@ NeuralNetwork::NeuralNetwork(int input, int hidden, int output, int layers) {
 
 	std::queue<int> q;
 	q.push(_ninput_nodes);
-	for(int i = 0; i < _nlayers - 2; i++) {
+	for (int i = 0; i < _nlayers - 2; i++) {
 		q.push(hidden);
 	}
 	q.push(_noutput_nodes);
 
-	for(int i = 0; i < _nlayers - 1; i++) {
+	for (int i = 0; i < _nlayers - 1; i++) {
 		int next = q.front();
 		q.pop();
 		_layers.push_back(Layer(next, q.front()));
@@ -69,9 +69,26 @@ void NeuralNetwork::Forward(int dataIndex) {
 	Matrix activationValues(1, _trainingData[dataIndex].size(), _trainingData[dataIndex]);
 	_layers[0].SetA(activationValues);
 
-	for(int i = 0; i < _nlayers - 1; i++) {
+	for (int i = 0; i < _nlayers - 1; i++) {
 		_layers[i].Forward();
 		_layers[i + 1].SetA(_layers[i].Forward());
+	}
+}
+
+void NeuralNetwork::updateWeights(int layer, double carry, double learn_rate) {
+	if (layer < 0) {
+		return;
+	}
+
+	if (layer == _nlayer - 2) {
+		for (int i = 0; i < nextLayer.GetSize(); i++) {
+			for (int j = 0; j < currLayer.GetSize(); j++) {
+				double pdZA = nextLayer.GetWEl(i, j);
+				double pdAZ = dA(nextLayer.GetZEl(0, j));
+				double pdCA = dC(currLayer.GetAEl(1, j), _trainingLabels[dataIndex][j]);	
+				a += pdZA + pdAZ + pdCA;
+			}
+		}
 	}
 }
 
@@ -92,14 +109,9 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 
 	//for all the others, we multiply the secret sauce by dZ/dW
 
-	//ya daz the backprop magik
-
 	//double val = dC() * dA();
 
 	//calculate the thing for the last layer
-
-	Layer last = _layers[_nlayers - 1];
-	Layer secondLast = _layers[_nlayers - 2];
 
 	//matrix dimesons
 	/*
@@ -112,21 +124,37 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 
 	*/
 
-	//how the second to last layer activation affects the cost
-	for(int i = 0; i < secondLast.GetSize(); i++) {
-		double a = 0;
-		for(int j = 0; j < last.GetSize(); j++) {
-			double pdZA = secondLast.GetWEl(i, j);
-			double pdAZ = dA(secondLast.GetZEl(0, j));
-			double pdCA = dC(last.GetAEl(1, j), _trainingLabels[dataIndex][j]);	
-			a += pdZA + pdAZ + pdCA;
+	Layer secondLastLayer = _layers[l];
+	Layer lastLayer = _layers[l + 1];
+	
+	// calculate dC/dA
+	std::vector<double> pdCA(lastLayer.GetSize(), 0);
+	for (int i = 0; i < lastLayer.GetSize(); i++) {
+		for (int j = 0; j < secondLastLayer.GetSize(); j++) {
+			double pdZA = secondLastLayer.GetWEl(i, j);
+			double pdAZ = dA(lastLayer.GetZEl(0, j));
+			double pdCA = dC(secondLastLayer.GetAEl(1, j), _trainingLabels[dataIndex][j]);	
+			pdCA[i] += pdZA + pdAZ + pdCA;
 		}
+	}
+
+
+	//how the second to last layer activation affects the cost
+	double a = 0;
+	for (int l = _nlayers - 2; l >= 0; l--) {
+		Layer currLayer = _layers[l];
+		Layer nextLayer = _layers[l + 1];
+
+		if (l == _nlayers - 2) {
+					}
+
+
 	}
 
 	//then calculate the things for the things influencing the last layer backwards
 
-	for(int i = _nlayers - 2; i >= 0; i--) {
-		for(int j = 0; j < _layers[i].GetSize(); i++) {
+	for (int i = _nlayers - 2; i >= 0; i--) {
+		for (int j = 0; j < _layers[i].GetSize(); i++) {
 
 		}
 	}
@@ -145,7 +173,7 @@ void NeuralNetwork::Train() {
 
 //debug
 void NeuralNetwork::Print() {
-	for(Layer l : _layers) {
+	for (Layer l : _layers) {
 		l.Print();
 	}
 }
