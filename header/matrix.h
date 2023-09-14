@@ -12,7 +12,6 @@ public:
 	Matrix(int rows, int cols, const std::vector<double> arr);
 
 	void Alloc(const std::vector<double> arr);
-	void Sigmoid();
 	void Fill(int x);
 	void Rand();
 	void Rand(double min, double max);
@@ -20,6 +19,7 @@ public:
 
 	static Matrix Dot(Matrix a, Matrix b);
 	static Matrix Add(Matrix a, Matrix b);
+	void Sigmoid();
 
 	int GetRows();
 	int GetCols();

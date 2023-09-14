@@ -39,6 +39,11 @@ Layer::Layer(int nodes, int next_nodes) {
 	_a = std::make_shared<Matrix>(1, nodes);
 	_w = std::make_shared<Matrix>(nodes, next_nodes);
 	_b = std::make_shared<Matrix>(1, next_nodes);
+
+	_backPropagationValues = std::make_shared<Matrix>(1, nodes);
+	_wGradientVector = std::make_shared<Matrix>(nodes, next_nodes);
+	_bGradientVector = std::make_shared<Matrix>(1, next_nodes);
+
 }
 
 void Layer::RandParams() {
@@ -58,6 +63,12 @@ void Layer::RandActivation() {
 
 }
 
+
+void Layer::ResetBackProp() {
+	_backPropagationValues->Fill(0);
+	_wGradientVector->Fill(0);
+	_bGradientVector->Fill(0);
+}
 
 int Layer::GetSize() {
 	return _size;
@@ -98,6 +109,27 @@ double Layer::GetZEl(int row, int col) {
 
 void Layer::SetZEl(int row, int col, double value) {
 	_z->SetEl(row, col, value);
+}
+
+double Layer::GetBackPropagationValues(int row, int col) {
+	return _backPropagationValues->GetEl(row, col); 
+}
+void Layer::SetBackPropagationValues(int row, int col, double value) {
+	_backPropagationValues->SetEl(row, col value);
+}
+
+double Layer::GetBiasGradientVectorValues(int row, int col) {
+	return _bGradientVector->getEl(row, col);
+}
+void Layer::SetBiasGradientVectorValues(int row, int col, double value) {
+	_bGradientVector->setEl(row, col, value);
+}
+
+double Layer::GetWeightGradientVectorValues(int row, int col) {
+	return _wGradientVector->GetEl(row, col);
+}
+void Layer::SetWeightGradientVectorValues(int row, int col, double value) {
+	_wGradientVector->SetEl(row, col, value);
 }
 
 Matrix Layer::Forward() {

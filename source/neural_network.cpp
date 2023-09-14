@@ -75,23 +75,6 @@ void NeuralNetwork::Forward(int dataIndex) {
 	}
 }
 
-void NeuralNetwork::updateWeights(int layer, double carry, double learn_rate) {
-	if (layer < 0) {
-		return;
-	}
-
-	if (layer == _nlayer - 2) {
-		for (int i = 0; i < nextLayer.GetSize(); i++) {
-			for (int j = 0; j < currLayer.GetSize(); j++) {
-				double pdZA = nextLayer.GetWEl(i, j);
-				double pdAZ = dA(nextLayer.GetZEl(0, j));
-				double pdCA = dC(currLayer.GetAEl(1, j), _trainingLabels[dataIndex][j]);	
-				a += pdZA + pdAZ + pdCA;
-			}
-		}
-	}
-}
-
 void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 	//output layer
 	//dC/dW = dC/dA * dA/dZ * dZ/dW
@@ -124,38 +107,36 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 
 	*/
 
-	Layer secondLastLayer = _layers[l];
-	Layer lastLayer = _layers[l + 1];
+	Layer secondLastLayer = _layers[_nlayers - 1];
+	Layer lastLayer = _layers[_nlayers - 2];
+
+	// std::vector<double> pdCA(secondLastLayer.GetSize(), 0);
 	
 	// calculate dC/dA
-	std::vector<double> pdCA(lastLayer.GetSize(), 0);
+	double pdCAArr[secondLastLayer.GetSize()];
+	for (int i = 0; i < secondLastLayer.GetSize(); i++) {
+		pdCAArr[i] = 0;
+	}
+
 	for (int i = 0; i < lastLayer.GetSize(); i++) {
 		for (int j = 0; j < secondLastLayer.GetSize(); j++) {
 			double pdZA = secondLastLayer.GetWEl(i, j);
 			double pdAZ = dA(lastLayer.GetZEl(0, j));
 			double pdCA = dC(secondLastLayer.GetAEl(1, j), _trainingLabels[dataIndex][j]);	
-			pdCA[i] += pdZA + pdAZ + pdCA;
+			pdCAArr[i] += pdZA + pdAZ + pdCA;
 		}
 	}
 
 
-	//how the second to last layer activation affects the cost
-	double a = 0;
-	for (int l = _nlayers - 2; l >= 0; l--) {
-		Layer currLayer = _layers[l];
-		Layer nextLayer = _layers[l + 1];
-
-		if (l == _nlayers - 2) {
-					}
-
-
-	}
-
-	//then calculate the things for the things influencing the last layer backwards
-
-	for (int i = _nlayers - 2; i >= 0; i--) {
-		for (int j = 0; j < _layers[i].GetSize(); i++) {
-
+	for (int currLayerIndex = _nlayers - 2; currLayerIndex >= 0; currLayerIndex--) {
+		Layer currLayer = _layer[currLayerIndex];
+		Layer nextLayer = _layer[currLayerIndex + 1];
+		for(int i = 0; i < nextLayer.GetSize()) {
+			for(int j = 0; j < currLayer.GetSize()) {
+				double pdZW;
+				double pdAZ;
+				double pdCA;
+			}
 		}
 	}
 }

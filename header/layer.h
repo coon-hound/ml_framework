@@ -26,11 +26,22 @@ public:
   double GetZEl(int row, int col);
   void SetZEl(int row, int col, double value);
 
+  double GetBackPropagationValues(int row, int col);
+  void SetBackPropagationValues(int row, int col, double value);
+
+  double GetBiasGradientVectorValues(int row, int col);
+  void SetBiasGradientVectorValues(int row, int col, double value);
+
+  double GetWeightGradientVectorValues(int row, int col);
+  void SetWeightGradientVectorValues(int row, int col, double value);
+
   int GetSize();
   int GetNextSize();
 
   Matrix Forward(); //returns a matrix of the activation values for the next layer. 
   
+  void ResetBackProp();
+
   //debugging
   void Print();
 
@@ -45,6 +56,11 @@ private:
   std::shared_ptr<Matrix> _a;
   std::shared_ptr<Matrix> _b; 
   std::shared_ptr<Matrix> _z; 
+
+  std::shared_ptr<Matrix> _backPropagationValues;
+
+  std::shared_ptr<Matrix> _wGradientVector;
+  std::shared_ptr<Matrix> _bGradientVector;
 };
 
 #endif //LAYER_H
