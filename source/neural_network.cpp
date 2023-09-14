@@ -105,6 +105,11 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 	_z = 1, next_nodes
 	_an = 1, next_nodes
 
+	_backPropagationValues = std::make_shared<Matrix>(1, nodes);
+	_wGradientVector = std::make_shared<Matrix>(nodes, next_nodes);
+	_bGradientVector = std::make_shared<Matrix>(1, next_nodes);
+
+
 	*/
 
 	Layer secondLastLayer = _layers[_nlayers - 1];
@@ -127,15 +132,22 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 		}
 	}
 
-
+	//weights
 	for (int currLayerIndex = _nlayers - 2; currLayerIndex >= 0; currLayerIndex--) {
 		Layer currLayer = _layer[currLayerIndex];
-		Layer nextLayer = _layer[currLayerIndex + 1];
-		for(int i = 0; i < nextLayer.GetSize()) {
+		Layer prevLayer = _layer[currLayerIndex + 1];
+		for(int i = 0; i < prevLayer.GetSize()) {
 			for(int j = 0; j < currLayer.GetSize()) {
-				double pdZW;
-				double pdAZ;
-				double pdCA;
+				double pdZW = currLayer.GetAEl(1, j);
+				//TODO: CHECK THIS
+				double pdZA = currLayer.GetWEl(i, j);
+				double pdAZ = currLayer.GetZEl(1, i);
+
+				//TODO: CHANGE THIS
+				double currLayerBackPropogationValue = pdZW * pdAZ;
+				double prevLayerBackPropagationValue = prevLayer.GetBackPropagationValues(1, i);
+
+				currLayer.SetBackPropagationValues(1, j, currLayerBackPropogationValue * prevLayerBackPropagationValue);
 			}
 		}
 	}
