@@ -115,14 +115,14 @@ double Layer::GetBackPropagationValues(int row, int col) {
 	return _backPropagationValues->GetEl(row, col); 
 }
 void Layer::SetBackPropagationValues(int row, int col, double value) {
-	_backPropagationValues->SetEl(row, col value);
+	_backPropagationValues->SetEl(row, col, value);
 }
 
 double Layer::GetBiasGradientVectorValues(int row, int col) {
-	return _bGradientVector->getEl(row, col);
+	return _bGradientVector->GetEl(row, col);
 }
 void Layer::SetBiasGradientVectorValues(int row, int col, double value) {
-	_bGradientVector->setEl(row, col, value);
+	_bGradientVector->SetEl(row, col, value);
 }
 
 double Layer::GetWeightGradientVectorValues(int row, int col) {

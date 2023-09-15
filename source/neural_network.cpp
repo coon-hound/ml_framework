@@ -114,17 +114,10 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 
 	Layer secondLastLayer = _layers[_nlayers - 1];
 	Layer lastLayer = _layers[_nlayers - 2];
-
-	// std::vector<double> pdCA(secondLastLayer.GetSize(), 0);
-	
-	// calculate dC/dA
-	double pdCAArr[secondLastLayer.GetSize()];
+	//cook the first layer first
+	std::vector<double> pdCAArr(secondLastLayer.GetSize(), 0);
 	for (int i = 0; i < secondLastLayer.GetSize(); i++) {
-		pdCAArr[i] = 0;
-	}
-
-	for (int i = 0; i < lastLayer.GetSize(); i++) {
-		for (int j = 0; j < secondLastLayer.GetSize(); j++) {
+		for (int j = 0; j < lastLayer.GetSize(); j++) {
 			double pdZA = secondLastLayer.GetWEl(i, j);
 			double pdAZ = dA(lastLayer.GetZEl(0, j));
 			double pdCA = dC(secondLastLayer.GetAEl(1, j), _trainingLabels[dataIndex][j]);	
@@ -134,20 +127,44 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 
 	//weights
 	for (int currLayerIndex = _nlayers - 2; currLayerIndex >= 0; currLayerIndex--) {
-		Layer currLayer = _layer[currLayerIndex];
-		Layer prevLayer = _layer[currLayerIndex + 1];
-		for(int i = 0; i < prevLayer.GetSize()) {
-			for(int j = 0; j < currLayer.GetSize()) {
-				double pdZW = currLayer.GetAEl(1, j);
-				//TODO: CHECK THIS
+		Layer currLayer = _layers[currLayerIndex];
+		Layer prevLayer = _layers[currLayerIndex + 1];
+
+		//first layer is special
+		if(currLayerIndex == _nlayers - 2) {
+			for (int i = 0; i < currLayer.GetSize(); i++) {
+				for (int j = 0; j < prevLayer.GetSize(); j++) {
+					double pdZA = currLayer.GetWEl(i, j);
+					double pdAZ = dA(prevLayer.GetZEl(0, j));
+					// double pdCA = dC(currLayer.GetAEl(0, i), _trainingLabels[dataIndex][j]);	
+
+					double pdZW = currLayer.GetAEl(0, i);
+
+					double currLayerBackPropogationValue = pdAZ * pdCAArr[i];
+
+					currLayer.SetBackPropagationValues(0, i, currLayerBackPropogationValue); 
+				}
+
+				continue;
+			}
+		}
+
+		for(int i = 0; i < currLayer.GetSize(); i++) {
+			for(int j = 0; j < prevLayer.GetSize(); j++) {
+				double pdZW = currLayer.GetAEl(0, i);
 				double pdZA = currLayer.GetWEl(i, j);
-				double pdAZ = currLayer.GetZEl(1, i);
+				double pdAZ = dA(currLayer.GetZEl(0, j));
 
-				//TODO: CHANGE THIS
-				double currLayerBackPropogationValue = pdZW * pdAZ;
-				double prevLayerBackPropagationValue = prevLayer.GetBackPropagationValues(1, i);
+				//update propogation values
+				double currLayerBackPropogationValue = pdAZ * pdZA;
+				double prevLayerBackPropagationValue = prevLayer.GetBackPropagationValues(0, j);
 
-				currLayer.SetBackPropagationValues(1, j, currLayerBackPropogationValue * prevLayerBackPropagationValue);
+				currLayer.SetBackPropagationValues(0, i, currLayerBackPropogationValue * prevLayerBackPropagationValue);
+
+				//update weights gradient values
+				double weightsGradientValue = prevLayerBackPropagationValue * pdAZ * pdZW;
+
+				currLayer.SetWeightGradientVectorValues(i, j, weightsGradientValue);
 			}
 		}
 	}
