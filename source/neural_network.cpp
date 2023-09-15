@@ -144,9 +144,8 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 
 					currLayer.SetBackPropagationValues(0, i, currLayerBackPropogationValue); 
 				}
-
-				continue;
 			}
+			continue;
 		}
 
 		for(int i = 0; i < currLayer.GetSize(); i++) {
