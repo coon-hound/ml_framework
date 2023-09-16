@@ -132,22 +132,37 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 
 		//first layer is special
 		if(currLayerIndex == _nlayers - 2) {
+
+			//weights
 			for (int i = 0; i < currLayer.GetSize(); i++) {
 				for (int j = 0; j < prevLayer.GetSize(); j++) {
-					double pdZA = currLayer.GetWEl(i, j);
 					double pdAZ = dA(prevLayer.GetZEl(0, j));
 					// double pdCA = dC(currLayer.GetAEl(0, i), _trainingLabels[dataIndex][j]);	
-
 					double pdZW = currLayer.GetAEl(0, i);
 
 					double currLayerBackPropogationValue = pdAZ * pdCAArr[i];
+					double currLayerWeightUpdateValue = currLayerBackPropogationValue * pdZW;
 
 					currLayer.SetBackPropagationValues(0, i, currLayerBackPropogationValue); 
+					currLayer.SetWeightGradientVectorValues(i, j, currLayerWeightUpdateValue);
 				}
 			}
+
+			// biases
+			for(int j = 0; j < prevLayer.GetSize(); j++) {
+				double pbZB = 1;
+
+				//update bias gradient values
+				double currLayerBackPropagationValue = currLayer.GetBackPropagationValues(0, j);
+				double biasGradientValue = currLayerBackPropagationValue * pbZB;
+
+				currLayer.SetBiasGradientVectorValues(0, j, biasGradientValue);
+			}
+
 			continue;
 		}
 
+		// weights
 		for(int i = 0; i < currLayer.GetSize(); i++) {
 			for(int j = 0; j < prevLayer.GetSize(); j++) {
 				double pdZW = currLayer.GetAEl(0, i);
@@ -155,16 +170,27 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 				double pdAZ = dA(currLayer.GetZEl(0, j));
 
 				//update propogation values
-				double currLayerBackPropogationValue = pdAZ * pdZA;
 				double prevLayerBackPropagationValue = prevLayer.GetBackPropagationValues(0, j);
+				double currLayerBackPropagationValue = pdAZ * pdZA * prevLayerBackPropagationValue;
 
-				currLayer.SetBackPropagationValues(0, i, currLayerBackPropogationValue * prevLayerBackPropagationValue);
+				currLayer.SetBackPropagationValues(0, i, currLayerBackPropagationValue);
 
-				//update weights gradient values
-				double weightsGradientValue = prevLayerBackPropagationValue * pdAZ * pdZW;
+				//update weight gradient values
+				double weightsGradientValue = currLayerBackPropagationValue * pdZW;
 
 				currLayer.SetWeightGradientVectorValues(i, j, weightsGradientValue);
 			}
+		}
+
+		// biases
+		for(int j = 0; j < prevLayer.GetSize(); j++) {
+				double pdZB = 1;
+
+				//update bias gradient values
+				double currLayerBackPropagationValue = currLayer.GetBackPropagationValues(0, j);
+				double biasGradientValue = currLayerBackPropagationValue * pdZB;
+
+				currLayer.SetBiasGradientVectorValues(0, j, biasGradientValue);
 		}
 	}
 }

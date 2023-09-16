@@ -17,31 +17,43 @@ int main()
 	std::vector<std::vector<double>> tData;
 	std::vector<std::vector<double>> tLabels;
 
-	for(int i = 0; i < 10; i++) {
-		data.push_back({rand_double(), rand_double()});
-		labels.push_back({rand_double(), rand_double()});
-		
-		tData.push_back({rand_double(), rand_double()});
-		tLabels.push_back({rand_double(), rand_double()});
-	}
+	data.push_back({1, 0});
+	labels.push_back({1});
+	tData.push_back({1, 0});
+	tLabels.push_back({1});
+
+	data.push_back({0, 1});
+	labels.push_back({1});
+	tData.push_back({0, 1});
+	tLabels.push_back({1});
+
+	data.push_back({0, 0});
+	labels.push_back({0});
+	tData.push_back({0, 0});
+	tLabels.push_back({0});
+
+	data.push_back({1, 1});
+	labels.push_back({0});
+	tData.push_back({1, 1});
+	tLabels.push_back({0});
 
 	printf("---data---\n");
-	for(int i = 0; i < 10; i++) {
+	for(int i = 0; i < 4; i++) {
 		printf("%f, %f\n", data[i][0], data[i][1]);
 	}
 
 	printf("---labels---\n");
-	for(int i = 0; i < 10; i++) {
+	for(int i = 0; i < 4; i++) {
 		printf("%f, %f\n", labels[i][0], labels[i][1]);
 	}
 
 	printf("---training data---\n");
-	for(int i = 0; i < 10; i++) {
+	for(int i = 0; i < 4; i++) {
 		printf("%f, %f\n", tData[i][0], tData[i][1]);
 	}
 
 	printf("---training labels---\n");
-	for(int i = 0; i < 10; i++) {
+	for(int i = 0; i < 4; i++) {
 		printf("%f, %f\n", tLabels[i][0], tLabels[i][1]);
 	}
 
