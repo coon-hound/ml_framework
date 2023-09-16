@@ -70,6 +70,14 @@ void Layer::ResetBackProp() {
 	_bGradientVector->Fill(0);
 }
 
+void Layer::ApplyGradients(double learn_rate) {
+	Matrix add = Matrix::MultiplyByFactor(learn_rate, *_wGradientVector);
+	_w = std::make_shared<Matrix>(Matrix::Add(*_w, add));
+
+	Matrix badd = Matrix::MultiplyByFactor(learn_rate, *_bGradientVector);
+	_b = std::make_shared<Matrix>(Matrix::Add(*_b, badd));
+}
+
 int Layer::GetSize() {
 	return _size;
 }

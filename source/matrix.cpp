@@ -127,6 +127,20 @@ Matrix Matrix::Add(Matrix a, Matrix b)
 	return ret;
 }
 
+Matrix Matrix::MultiplyByFactor(double a, Matrix b) {
+	int rows = b.GetRows();	
+	int cols = b.GetCols();
+
+	Matrix ret(rows, cols);
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			ret.SetEl(i, j, b.GetEl(i, j) * a);	
+		}
+	}
+	
+	return ret;
+}
+
 int Matrix::GetRows()
 {
 	return _rows;
@@ -156,4 +170,8 @@ Matrix Matrix::operator * (Matrix const &a)
 Matrix Matrix::operator + (Matrix const &a)
 {
 	return Matrix::Add(*this, a);
+}
+
+Matrix Matrix::operator * (const double &a) {
+	return Matrix::MultiplyByFactor(a, *this);
 }

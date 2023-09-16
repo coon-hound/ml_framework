@@ -42,6 +42,8 @@ public:
   
   void ResetBackProp();
 
+  void ApplyGradients(double learn_rate);
+
   //debugging
   void Print();
 

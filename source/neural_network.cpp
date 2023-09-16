@@ -195,15 +195,15 @@ void NeuralNetwork::BackPropagate(int dataIndex, double learn_rate) {
 	}
 }
 
-void NeuralNetwork::Train() {
-	//backpropagation
-	//output layer
-	//dC/dW = dC/dA * dA/dZ * dZ/dW
-	//dC/dB = dC/dA * dA/dZ * dZ/dB
-	//dC/dA = 2 * (A - Y)
-	//dA/dZ = A * (1 - A)
-	//dZ/dW = A
-	//dZ/dB = 1
+void NeuralNetwork::ApplyGradients(double learn_rate) {
+	for (auto l : _layers) {
+		l.ApplyGradients(learn_rate);
+	}
+}
+
+void NeuralNetwork::Train(int epocs, double learn_rate) {
+
+
 }
 
 //debug

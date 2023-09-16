@@ -16,7 +16,9 @@ public:
 	void Forward(int dataIndex);
 	void BackPropagate(int dataIndex, double learn_rate);
 
-	void Train();
+	void ApplyGradients(double learn_rate);
+
+	void Train(int epochs, double learn_rate);
 
 	//debug
 

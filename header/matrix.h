@@ -19,6 +19,7 @@ public:
 
 	static Matrix Dot(Matrix a, Matrix b);
 	static Matrix Add(Matrix a, Matrix b);
+	static Matrix MultiplyByFactor(double a, Matrix b);
 	void Sigmoid();
 
 	int GetRows();
@@ -28,6 +29,7 @@ public:
 	void SetEl(int i, int j, double value); 
 
 	Matrix operator * (Matrix const &a);
+	Matrix operator * (const double &a);
 	Matrix operator + (Matrix const &a);
 
 private:
